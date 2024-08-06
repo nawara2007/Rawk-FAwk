@@ -38,22 +38,36 @@ def index():
 
     return render_template("index.html")
 
-
 @app.route("/videos")
 @login_required
 def videos():
     """Show portfolio of stocks"""
-    # user_id = session["user_id"]
+    user_id = session["user_id"]
 
     return render_template("videos.html")
 
-@app.route("/mails")
+@app.route("/articles")
 @login_required
-def mails():
-    """Show portfolio of stocks"""
-    # user_id = session["user_id"]
+def articles():
+    all_articles = db.execute("SELECT * FROM articles");
+    return render_template("articles.html", all_articles=all_articles)
 
-    return render_template("mails.html")
+@app.route("/addarticle", methods=["GET", "POST"])
+@login_required
+def addarticle():
+    if request.method == "POST":
+        if not request.form.get("title") or not request.form.get("article") or not request.form.get("source"):
+            return apology("Please enter the full data")
+        
+        title = request.form.get("title")
+        article = request.form.get("article")
+        source = request.form.get("source")
+            
+        db.execute("INSERT INTO articles (title, article, source) VALUES (?, ?, ?)", title, article, source)
+
+        return redirect("/addarticle")
+    else:
+        return render_template("addarticle.html")
 
 @app.route("/doctors")
 @login_required
@@ -63,6 +77,14 @@ def doctors():
 
     return render_template("doctors.html")
 
+@app.route("/quizes")
+@login_required
+def quizes():
+    """Show portfolio of stocks"""
+    user_id = session["user_id"]
+
+    return render_template("quizes.html")
+ 
 @app.route("/password", methods=["GET", "POST"])
 @login_required
 def password():

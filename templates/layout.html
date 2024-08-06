@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>روَّق و فوَّق</title>
+    <title>روَّق و فوَّق: {% block title %} {% endblock %}</title>
     <script src="/static/app.js" defer></script>
     <link href="/static/logo.png" rel="icon">
     <link href="/static/styles.css" rel="stylesheet">
@@ -29,6 +29,10 @@
                             <li class="nav-item"><a class="nav-link" href="/articles">Articles</a></li>
                             <li class="nav-item"><a class="nav-link" href="/videos">Videos</a></li>
                             <li class="nav-item"><a class="nav-link" href="/doctors">Doctors</a></li>
+
+                            {% if session.user_id == 1 %}
+                            <li class="nav-item"><a class="nav-link" href="/statisics">Statistics</a></li>
+                            {% endif %}
                         </ul>
                         <ul class="navbar-nav ml-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/password">Change Password</a></li>

@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    {% for i in all_articles %}
+    <section>
+        <h2>{{ i["title"] }}</h2>
+        <p>
+            {{ i["article"] }}
+        </p>
+        <p>
+            source: {{ i["source"] }}
+        </p>
+    </section>
+    {% endfor %}
+
+    <!-- Comment form section for user input -->
+    <section id="comment-form">
+        <h2>Leave a Comment</h2>
+        <form action="/submit_comment" method="post">
+            <div class="form-group">
+                <!-- Input for user's name -->
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <!-- Input for user's email -->
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <!-- Input for user's comment -->
+                <label for="comment">Comment:</label>
+                <textarea id="comment" name="comment" rows="4" required></textarea>
+            </div>
+            <!-- Submit button for the form -->
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <!-- Section for displaying comments -->
+    <section id="comments">
+        <h2>Comments</h2>
+        <div id="comments-list">
+            <!-- Comments will be dynamically added here -->
+        </div>
+    </section>
+
+{% endblock %}
