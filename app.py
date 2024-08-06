@@ -32,13 +32,33 @@ def after_request(response):
 
 
 @app.route("/")
-@login_required
 def index():
     """Show portfolio of stocks"""
-    user_id = session["user_id"]
+    # user_id = session["user_id"]
 
     return render_template("index.html")
 
+
+@app.route("/videos")
+def videos():
+    """Show portfolio of stocks"""
+    # user_id = session["user_id"]
+
+    return render_template("videos.html")
+
+@app.route("/mails")
+def mails():
+    """Show portfolio of stocks"""
+    # user_id = session["user_id"]
+
+    return render_template("mails.html")
+
+@app.route("/doctors")
+def doctors():
+    """Show portfolio of stocks"""
+    # user_id = session["user_id"]
+
+    return render_template("doctors.html")
 
 @app.route("/password", methods=["GET", "POST"])
 @login_required
