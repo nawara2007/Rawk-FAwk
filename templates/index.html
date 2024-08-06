@@ -6,6 +6,12 @@
 
 {% block main %}
 <!-- section 1 -->
+<section>
+    <h1>Welcome, {{ user[0]["username"] }}</h1>
+    <h3>your age: {{ user[0]["age"] }}</h3>
+    <h3>your status: {{ user[0]["status"] }}</h3>
+</section>
+
 <a href="/articles">
 <section id="section1">
     <h2>Articles</h2>

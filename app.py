@@ -33,8 +33,9 @@ def after_request(response):
 @login_required
 def index():
     user_id = session["user_id"]
-
-    return render_template("index.html")
+    user = db.execute("SELECT * FROM users WHERE id = ?", user_id)
+    print(user)
+    return render_template("index.html", user=user)
 
 @app.route("/videos")
 @login_required
@@ -126,10 +127,10 @@ def doctors():
 
     return render_template("doctors.html", all_doctors=all_doctors)
 
-@app.route("/quizes")
+@app.route("/quizzes")
 @login_required
-def quizes():
-    return render_template("quizes.html")
+def quizzes():
+    return render_template("quizzes.html")
 
 @app.route("/comment", methods=["POST"])
 @login_required
@@ -180,6 +181,22 @@ def deletedoctor():
     db.execute("DELETE FROM doctors WHERE id = ?", id)
 
     return redirect("/editdoctors")
+
+@app.route("/deletecomment", methods=["POST", "GET"])
+@login_required
+@superuser_required
+def deletecomment():
+    if request.method == "POST":
+        if not request.form.get("id"):
+            return apology("Please enter the full data")
+        
+        id = request.form.get("id")
+            
+        db.execute("DELETE FROM comments WHERE id = ?", id)
+
+        return redirect("/deletecomment")
+    else:
+        return render_template("deletecomment.html")
 
 @app.route("/password", methods=["GET", "POST"])
 @login_required

@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block title %}
+    Videos
+{% endblock %}
+
 {% block main %}
 
     {% for i in all_videos %}
@@ -15,6 +19,21 @@
     </section>
     {% endfor %}
 
+    <section id="comment-form">
+        <h2>Leave a Comment</h2>
+        <div style="display: flex; justify-content: center; align-items: center; min-height: 60vh; margin: 0;">
+            <form action="/comment" method="post">
+                <div class="form-group">
+                    <input autocomplete="off" autofocus class="form-control" name="name" placeholder="Name" type="text">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" name="comment" type="text" placeholder="Comment here" row="4" required></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+
     <!-- Section for displaying comments -->
     <section id="comments">
         <h2>Comments</h2>
@@ -28,6 +47,11 @@
                 <p>
                     Published: {{ i["date"] }}
                 </p>
+                {% if session.user_id == 1 %}
+                <p> 
+                    id: {{i["id"]}}
+                </p>
+                {% endif %}
             </section>
             {% endfor %}
         </div>
