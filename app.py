@@ -32,14 +32,15 @@ def after_request(response):
 
 
 @app.route("/")
+@login_required
 def index():
-    """Show portfolio of stocks"""
-    # user_id = session["user_id"]
+    user_id = session["user_id"]
 
     return render_template("index.html")
 
 
 @app.route("/videos")
+@login_required
 def videos():
     """Show portfolio of stocks"""
     # user_id = session["user_id"]
@@ -47,6 +48,7 @@ def videos():
     return render_template("videos.html")
 
 @app.route("/mails")
+@login_required
 def mails():
     """Show portfolio of stocks"""
     # user_id = session["user_id"]
@@ -54,9 +56,10 @@ def mails():
     return render_template("mails.html")
 
 @app.route("/doctors")
+@login_required
 def doctors():
     """Show portfolio of stocks"""
-    # user_id = session["user_id"]
+    user_id = session["user_id"]
 
     return render_template("doctors.html")
 
@@ -164,4 +167,4 @@ def register():
     else:
         return render_template("register.html")
 
-app.run(host="0.0.0.0", port=8080, threaded=True)
+app.run(host="0.0.0.0", port=8050, threaded=True)

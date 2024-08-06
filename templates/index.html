@@ -1,57 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>روَّق و فوَّق</title>
-    <script src="static\app.js" defer></script>
-    <link href="/static/logo.png" rel="icon">
-    <link href="/static/Style.css" rel="stylesheet">
-</head>
-<body>
-    <!-- Background animtion element -->
-    <div class="background-animation"></div>
-    <!-- Header section containing the title and navigation -->
-        <header>
-            <img src="/static/logo.png" alt="Logo" class="logo">
-            <nav class="navbar">
-                <ul>
-                    <!-- Navigation links to different sections of the page -->
-                    <li><a href="#section1">Mails</a></li>
-                    <li><a href="#section2">Videos</a></li>
-                    <li><a href="#section3">Doctors</a></li>
-                </ul>
-            </nav>
-        </header>
+{% extends "layout.html" %}
 
-        <main>
-            <!-- section 1 -->
-            <a href="mails.html" target="_blank">
-            <section id="section1">
-                <h2>Mails</h2>
-                <p>HERE MAILS FOR PATIENTS</p>
-            </section>
-            </a>
+{% block main %}
+<!-- section 1 -->
+<a href="/articles">
+<section id="section1">
+    <h2>Articles</h2>
+    <p>HERE ARTICLES FOR USERS</p>
+</section>
+</a>
 
-            <a href="videos.html" target="_blank">
-            <section id="section2">
-                <!-- section 2 -->
-                <h2>Videos</h2>
-                <p>HERE VIDEOS FOR TIPS AND SESSIONS</p>
-            </section>
-            </a>
+<a href="/videos">
+<section id="section2">
+    <!-- section 2 -->
+    <h2>Videos</h2>
+    <p>HERE VIDEOS FOR TIPS AND SESSIONS</p>
+</section>
+</a>
 
-            <a href="doctors.html" target="_blank">
-            <section id="section3">
-                <!-- section 3 -->
-                <h2>Doctors</h2>
-                <P>HERE A Doctor's LIST FOR THE PATIENT</P>
-            </section>
-            </a>
-
-        <!-- Footer section -->
-        <footer>
-            <h2>&copy; 2024 El Matador Company</h2>
-        </footer>
-</body>
-</html>
+<a href="/doctors">
+<section id="section3">
+    <!-- section 3 -->
+    <h2>Doctors</h2>
+    <P>HERE A Doctor's LIST FOR THE PATIENTS</P>
+</section>
+</a>
+{% endblock %}

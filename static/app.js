@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+/*document.addEventListener("DOMContentLoaded", function() {
     // Select all navigation links in the navbar
     const links = document.querySelectorAll("nav ul li a");
 
@@ -105,4 +105,4 @@ document.addEventListener("DOMContentLoaded", function() {
     sections.forEach(section => {
         observer.observe(section);
     });
-});
+});*/

@@ -28,6 +28,16 @@ header h1 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
 }
 
+.navbar-brand img {
+    max-height: 40px;
+  }
+
+  @media (max-width: 767px) {
+    .navbar-brand img {
+      max-height: 30px;
+    }
+  }
+
 .navbar ul {
     list-style-type: none;
     margin: 0;
@@ -55,11 +65,19 @@ header h1 {
     border-radius: 4px;
 }
 
-main {
-    display: flex;
-    flex-direction: column;
-    padding: 2em;
-    margin-top: 60px; /* Adjust for the fixed navbar */
+main
+{
+    /* Scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* Center contents */
+    text-align: center;
+}
+
+main img
+{
+    /* Constrain images on small screens */
+    max-width: 100%;
 }
 
 section {
