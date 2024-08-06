@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Videos
+{% endblock %}
+
+{% block main %}
+<div style="display: flex; justify-content: center; align-items: center; min-height: 60vh; margin: 0;">
+    <form action="/addvideo" method="post">
+        <div class="form-group">
+            <h3>Add Video</h3>
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Title" type="text" required>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" name="url" placeholder="URL" type="url" row="4" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>
+<div style="display: flex; justify-content: center; align-items: center; min-height: 60vh; margin: 0;">
+    <form action="/deletevideo" method="post">
+        <div class="form-group">
+            <h3>Delete Video</h3>
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="id" placeholder="Video id" type="number" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

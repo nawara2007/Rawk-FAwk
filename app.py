@@ -1,12 +1,10 @@
-import os
-
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
-from datetime import datetime
+from datetime import date
 
-from helpers import apology, login_required
+from helpers import apology, login_required, superuser_required
 
 # Configure application
 app = Flask(__name__)
@@ -41,50 +39,148 @@ def index():
 @app.route("/videos")
 @login_required
 def videos():
-    """Show portfolio of stocks"""
-    user_id = session["user_id"]
+    all_comments = db.execute("SELECT * FROM comments")
+    all_videos = db.execute("SELECT * FROM videos")
 
-    return render_template("videos.html")
+    return render_template("videos.html", all_videos=all_videos, all_comments=all_comments)
 
 @app.route("/articles")
 @login_required
 def articles():
-    all_articles = db.execute("SELECT * FROM articles");
-    return render_template("articles.html", all_articles=all_articles)
+    all_articles = db.execute("SELECT * FROM articles")
+    all_comments = db.execute("SELECT * FROM comments")
 
-@app.route("/addarticle", methods=["GET", "POST"])
+    return render_template("articles.html", all_articles=all_articles, all_comments=all_comments)
+
+@app.route("/editarticles")
 @login_required
-def addarticle():
-    if request.method == "POST":
-        if not request.form.get("title") or not request.form.get("article") or not request.form.get("source"):
-            return apology("Please enter the full data")
-        
-        title = request.form.get("title")
-        article = request.form.get("article")
-        source = request.form.get("source")
-            
-        db.execute("INSERT INTO articles (title, article, source) VALUES (?, ?, ?)", title, article, source)
+@superuser_required
+def editarticles():
+    return render_template("editarticles.html")
 
-        return redirect("/addarticle")
-    else:
-        return render_template("addarticle.html")
+@app.route("/editvideos")
+@login_required
+@superuser_required
+def editvideos():
+    return render_template("editvideos.html")
+
+@app.route("/addarticle", methods=["POST"])
+@login_required
+@superuser_required
+def addarticle():
+    if not request.form.get("title") or not request.form.get("article") or not request.form.get("source"):
+        return apology("Please enter the full data")
+    
+    title = request.form.get("title")
+    article = request.form.get("article")
+    source = request.form.get("source")
+        
+    db.execute("INSERT INTO articles (title, article, source) VALUES (?, ?, ?)", title, article, source)
+
+    return redirect("/editarticles")
+    
+@app.route("/addvideo", methods=["POST"])
+@login_required
+@superuser_required
+def addvideo():
+    if not request.form.get("title") or not request.form.get("url"):
+        return apology("Please enter the full data")
+    
+    title = request.form.get("title")
+    url = request.form.get("url")
+        
+    db.execute("INSERT INTO videos (title, url) VALUES (?, ?)", title, url)
+
+    return redirect("/editvideos")
+
+@app.route("/deletevideo", methods=["POST"])
+@login_required
+@superuser_required
+def deletevideo():
+    if not request.form.get("id"):
+        return apology("Please enter the full data")
+    
+    id = request.form.get("id")
+        
+    db.execute("DELETE FROM videos WHERE id = ?", id)
+
+    return redirect("/editvideos")
+
+@app.route("/deletearticle", methods=["POST"])
+@login_required
+@superuser_required
+def deletearticle():
+    if not request.form.get("id"):
+        return apology("Please enter the full data")
+    
+    id = int(request.form.get("id"))
+        
+    db.execute("DELETE FROM articles WHERE id = ?", id)
+
+    return redirect("/editarticles")
 
 @app.route("/doctors")
 @login_required
 def doctors():
-    """Show portfolio of stocks"""
-    user_id = session["user_id"]
+    all_doctors = db.execute("SELECT * FROM doctors")
 
-    return render_template("doctors.html")
+    return render_template("doctors.html", all_doctors=all_doctors)
 
 @app.route("/quizes")
 @login_required
 def quizes():
-    """Show portfolio of stocks"""
-    user_id = session["user_id"]
-
     return render_template("quizes.html")
- 
+
+@app.route("/comment", methods=["POST"])
+@login_required
+def comment():
+    if not request.form.get("name") or not request.form.get("comment"):
+            return apology("Please enter the full data")
+    
+    name = request.form.get("name")
+    comment = request.form.get("comment")
+    the_date = date.today()
+
+    db.execute("INSERT INTO comments (username, comment, date) VALUES (?, ?, ?)", name, comment, the_date)
+
+    return redirect("/articles")
+
+@app.route("/editdoctors")
+@login_required
+@superuser_required
+def editdoctors():
+    return render_template("editdoctors.html")
+
+@app.route("/adddoctor", methods=["POST"])
+@login_required
+@superuser_required
+def adddoctor():
+    if not request.form.get("name") or not request.form.get("address") or not request.form.get("rate") or not request.form.get("picture"):
+        return apology("Please enter the full data")
+    
+    name = request.form.get("name")
+    address = request.form.get("address")
+    rate = request.form.get("rate")
+    picture = request.form.get("picture")
+
+        
+    db.execute("INSERT INTO doctors (name, address, rate, picture) VALUES (?, ?, ?, ?)", name, address, rate, picture)
+
+    return redirect("/editdoctors")
+
+@app.route("/deletedoctor", methods=["POST"])
+@login_required
+@superuser_required
+def deletedoctor():
+    if not request.form.get("id"):
+        return apology("Please enter the full data")
+    
+    id = request.form.get("id")
+        
+    db.execute("DELETE FROM doctors WHERE id = ?", id)
+
+    return redirect("/editdoctors")
+
 @app.route("/password", methods=["GET", "POST"])
 @login_required
 def password():
@@ -174,11 +270,14 @@ def register():
         
         elif not request.form.get("confirm_password") or request.form.get("password") != request.form.get("confirm_password"):
             return apology("The password does not match", 403)
+
+        elif not request.form.get("age") or int(request.form.get("age")) > 90 or int(request.form.get("age")) < 10:
+            return apology("Enter a valid age", 403)
         
         checker = db.execute("Select * FROM users WHERE username = ?", request.form.get("username"))
 
         if len(checker) == 0:
-            db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", request.form.get("username") , generate_password_hash(request.form.get("password")))
+            db.execute("INSERT INTO users (username, hash, age) VALUES (?, ?, ?)", request.form.get("username") , generate_password_hash(request.form.get("password")), request.form.get("age"))
 
             session["user_id"] = db.execute("Select id FROM users WHERE username = ?", request.form.get("username"))
 
@@ -189,4 +288,4 @@ def register():
     else:
         return render_template("register.html")
 
-app.run(host="0.0.0.0", port=8050, threaded=True)
+app.run(host="0.0.0.0", port=8080, threaded=True)

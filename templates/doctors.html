@@ -1,42 +1,21 @@
 {% extends "layout.html" %}
 
+{% block title %}
+    Doctors
+{% endblock %}
+
 {% block main %}
-            <!-- section 1 -->
-            <a href="mails.html" target="_blank">
-            <section id="section1">
-                <h2>Section 1</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, assumenda? Tenetur explicabo esse quos harum sunt in impedit sint, corporis aspernatur vero necessitatibus sapiente cum veritatis voluptate architecto dicta ab!
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum rem commodi temporibus, minima recusandae praesentium exercitationem nemo a aperiam accusantium ipsa assumenda quidem molestias ullam laudantium nisi blanditiis, pariatur modi.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur in soluta provident atque porro modi similique expedita temporibus, quo eaque dicta itaque sunt ad tempora aspernatur at quidem! Repudiandae, consectetur.
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, assumenda? Tenetur explicabo esse quos harum sunt in impedit sint, corporis aspernatur vero necessitatibus sapiente cum veritatis voluptate architecto dicta ab!
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum rem commodi temporibus, minima recusandae praesentium exercitationem nemo a aperiam accusantium ipsa assumenda quidem molestias ullam laudantium nisi blanditiis, pariatur modi.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur in soluta provident atque porro modi similique expedita temporibus, quo eaque dicta itaque sunt ad tempora aspernatur at quidem! Repudiandae, consectetur.
-                </p>
-            </section>
-            </a>
-
-            <a href="videos.html" target="_blank">
-            <section id="section2">
-                <!-- section 2 -->
-                <h2>Section 2</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam, asperiores consequuntur laborum maxime ipsum accusantium repellendus vel voluptatem eius repudiandae praesentium dolores voluptas maiores, ipsam eaque at adipisci ea!
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, assumenda? Tenetur explicabo esse quos harum sunt in impedit sint, corporis aspernatur vero necessitatibus sapiente cum veritatis voluptate architecto dicta ab!
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum rem commodi temporibus, minima recusandae praesentium exercitationem nemo a aperiam accusantium ipsa assumenda quidem molestias ullam laudantium nisi blanditiis, pariatur modi.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur in soluta provident atque porro modi similique expedita temporibus, quo eaque dicta itaque sunt ad tempora aspernatur at quidem! Repudiandae, consectetur.
-                </p>
-            </section>
-            </a>
-
-
-            <a href="doctors.html" target="_blank">
-            <section id="section3">
-                <!-- section 3 -->
-                <h2>Section 3</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni quas sed suscipit architecto aut animi nulla repudiandae distinctio, quo maxime corrupti labore obcaecati, ullam repellendus ab doloremque perspiciatis rem! Ratione?
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, assumenda? Tenetur explicabo esse quos harum sunt in impedit sint, corporis aspernatur vero necessitatibus sapiente cum veritatis voluptate architecto dicta ab!
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum rem commodi temporibus, minima recusandae praesentium exercitationem nemo a aperiam accusantium ipsa assumenda quidem molestias ullam laudantium nisi blanditiis, pariatur modi.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur in soluta provident atque porro modi similique expedita temporibus, quo eaque dicta itaque sunt ad tempora aspernatur at quidem! Repudiandae, consectetur.
-                </p>
-            </section>
-            </a>
+    {% for i in all_doctors %}
+    <section>
+        <h2>{{ i["name"] }}</h2>
+        <img width="300" height="200" src="{{ i['picture'] }}">
+        <p> Address: {{ i["address"] }}</p>
+        <p> Rate: {{ i["rate"] }}/10</p>
+        {% if session.user_id == 1 %}
+            <p>
+                id: {{ i["id"] }}
+            </p>
+        {% endif %}
+    </section>
+    {% endfor %}
 {% endblock%}

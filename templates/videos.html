@@ -1,67 +1,35 @@
 {% extends "layout.html" %}
 
 {% block main %}
-    <section id="section1">
-        <h2>Section 1</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, assumenda? Tenetur explicabo esse quos harum sunt in impedit sint, corporis aspernatur vero necessitatibus sapiente cum veritatis voluptate architecto dicta ab!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum rem commodi temporibus, minima recusandae praesentium exercitationem nemo a aperiam accusantium ipsa assumenda quidem molestias ullam laudantium nisi blanditiis, pariatur modi.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur in soluta provident atque porro modi similique expedita temporibus, quo eaque dicta itaque sunt ad tempora aspernatur at quidem! Repudiandae, consectetur.
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, assumenda? Tenetur explicabo esse quos harum sunt in impedit sint, corporis aspernatur vero necessitatibus sapiente cum veritatis voluptate architecto dicta ab!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum rem commodi temporibus, minima recusandae praesentium exercitationem nemo a aperiam accusantium ipsa assumenda quidem molestias ullam laudantium nisi blanditiis, pariatur modi.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur in soluta provident atque porro modi similique expedita temporibus, quo eaque dicta itaque sunt ad tempora aspernatur at quidem! Repudiandae, consectetur.
-        </p>
-    </section>
 
-    <section id="section2">
-        <!-- section 2 -->
-        <h2>Section 2</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam, asperiores consequuntur laborum maxime ipsum accusantium repellendus vel voluptatem eius repudiandae praesentium dolores voluptas maiores, ipsam eaque at adipisci ea!
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, assumenda? Tenetur explicabo esse quos harum sunt in impedit sint, corporis aspernatur vero necessitatibus sapiente cum veritatis voluptate architecto dicta ab!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum rem commodi temporibus, minima recusandae praesentium exercitationem nemo a aperiam accusantium ipsa assumenda quidem molestias ullam laudantium nisi blanditiis, pariatur modi.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur in soluta provident atque porro modi similique expedita temporibus, quo eaque dicta itaque sunt ad tempora aspernatur at quidem! Repudiandae, consectetur.
-        </p>
+    {% for i in all_videos %}
+    <section>
+        <h2>{{ i["title"] }}</h2>
+        <iframe width="450" height="400" src="{{ i['url'] }}">
+        </iframe>
+        {% if session.user_id == 1 %}
+            <p>
+                id: {{ i["id"] }}
+            </p>
+        {% endif %}
     </section>
-
-
-    <section id="section3">
-        <!-- section 3 -->
-        <h2>Section 3</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni quas sed suscipit architecto aut animi nulla repudiandae distinctio, quo maxime corrupti labore obcaecati, ullam repellendus ab doloremque perspiciatis rem! Ratione?
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, assumenda? Tenetur explicabo esse quos harum sunt in impedit sint, corporis aspernatur vero necessitatibus sapiente cum veritatis voluptate architecto dicta ab!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum rem commodi temporibus, minima recusandae praesentium exercitationem nemo a aperiam accusantium ipsa assumenda quidem molestias ullam laudantium nisi blanditiis, pariatur modi.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur in soluta provident atque porro modi similique expedita temporibus, quo eaque dicta itaque sunt ad tempora aspernatur at quidem! Repudiandae, consectetur.
-        </p>
-    </section>
-
-    <!-- Comment form section for user input -->
-    <section id="comment-form">
-        <h2>Leave a Comment</h2>
-        <form action="/submit_comment" method="post">
-            <div class="form-group">
-                <!-- Input for user's name -->
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <!-- Input for user's email -->
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <!-- Input for user's comment -->
-                <label for="comment">Comment:</label>
-                <textarea id="comment" name="comment" rows="4" required></textarea>
-            </div>
-            <!-- Submit button for the form -->
-            <button type="submit">Submit</button>
-        </form>
-    </section>
+    {% endfor %}
 
     <!-- Section for displaying comments -->
     <section id="comments">
         <h2>Comments</h2>
         <div id="comments-list">
-            <!-- Comments will be dynamically added here -->
+            {% for i in all_comments %}
+            <section>
+                <h2>{{ i["username"] }}</h2>
+                <p>
+                    {{ i["comment"] }}
+                </p>
+                <p>
+                    Published: {{ i["date"] }}
+                </p>
+            </section>
+            {% endfor %}
         </div>
     </section>
 
