@@ -1,5 +1,5 @@
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date
@@ -34,7 +34,6 @@ def after_request(response):
 def index():
     user_id = session["user_id"]
     user = db.execute("SELECT * FROM users WHERE id = ?", user_id)
-    print(user)
     return render_template("index.html", user=user)
 
 @app.route("/videos")
@@ -127,10 +126,30 @@ def doctors():
 
     return render_template("doctors.html", all_doctors=all_doctors)
 
-@app.route("/quizzes")
+@app.route("/tests", methods=["POST", "GET"])
 @login_required
-def quizzes():
-    return render_template("quizzes.html")
+def tests():
+    if request.method == "POST":
+        questions = db.execute("SELECT * FROM questions")
+        result = 0
+        user_id = session["user_id"]
+
+        for i in questions:
+            result += int(request.form.get(str(i["id"])))
+        
+        if result == 0 and result <= 4:
+            db.execute("UPDATE users SET status= ? Where id = ?", "Minimal Anxiety", user_id)
+        elif result >= 5 and result <= 9:
+            db.execute("UPDATE users SET status= ? Where id = ?", "Mild Anxiety", user_id)
+        elif result >= 10 and result <= 14:
+           db.execute("UPDATE users SET status= ? Where id = ?", "Moderate Anxiety", user_id)
+        elif result >= 15 and result <= 21:
+            db.execute("UPDATE users SET status= ? Where id = ?", "Severe Anxiety", user_id)
+
+        return redirect("/")
+    else:
+        all_questions = db.execute("SELECT * FROM questions")
+        return render_template("tests.html", all_questions=all_questions)
 
 @app.route("/comment", methods=["POST"])
 @login_required
@@ -182,6 +201,40 @@ def deletedoctor():
 
     return redirect("/editdoctors")
 
+@app.route("/editquestions")
+@login_required
+@superuser_required
+def editquestions():
+    return render_template("editquestions.html")
+
+@app.route("/addquestion", methods=["POST"])
+@login_required
+@superuser_required
+def addquestion():
+    if not request.form.get("question") or not request.form.get("test_no"):
+        return apology("Please enter the full data")
+    
+    question = request.form.get("question")
+    test_no = request.form.get("test_no")
+
+        
+    db.execute("INSERT INTO questions (question, test_no) VALUES (?, ?)", question, test_no)
+
+    return redirect("/editquestions")
+
+@app.route("/deletequestion", methods=["POST"])
+@login_required
+@superuser_required
+def deletequestion():
+    if not request.form.get("id"):
+        return apology("Please enter the full data")
+    
+    id = request.form.get("id")
+        
+    db.execute("DELETE FROM questions WHERE id = ?", id)
+
+    return redirect("/editquestions")
+
 @app.route("/deletecomment", methods=["POST", "GET"])
 @login_required
 @superuser_required
@@ -197,7 +250,7 @@ def deletecomment():
         return redirect("/deletecomment")
     else:
         return render_template("deletecomment.html")
-
+    
 @app.route("/password", methods=["GET", "POST"])
 @login_required
 def password():
@@ -305,4 +358,4 @@ def register():
     else:
         return render_template("register.html")
 
-app.run(host="0.0.0.0", port=8080, threaded=True)
+app.run(host="0.0.0.0", port=8060, threaded=True)

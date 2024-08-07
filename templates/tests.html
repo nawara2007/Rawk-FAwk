@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Tests
+{% endblock %}
+
+{% block main %}
+<section>
+    <h1>Anxiety Test</h1>
+</section>
+<section>
+    <div style="display: flex; justify-content: center; align-items: left;">
+        <form action="/tests" method="post">
+                <div class="form-group" style="align-items: left;">
+                    <ol>
+                        {% for i in all_questions %}
+                            <li style="font-size: large;color: #66731e; ">{{i["question"]}}</li>
+                                
+                            <input type="radio" id="0{{i['id']}}" name="{{i['id']}}" value="0" required>
+                            <label for="0{{i['id']}}">NOT AT ALL</label><br>
+
+                            <input type="radio" id="1{{i['id']}}" name="{{i['id']}}" value="1" required>
+                            <label for="1{{i['id']}}">SEVERAL DAYS</label><br>
+
+                            <input type="radio" id="2{{i['id']}}" name="{{i['id']}}" value="2" required>
+                            <label for="2{{i['id']}}">MORE THAN HALF THE DAYS</label><br>
+
+                            <input type="radio" id="3{{i['id']}}" name="{{i['id']}}" value="3" required>
+                            <label for="3{{i['id']}}">NEARLY EVERY DAY</label><br>
+
+                            {% if session.user_id == 1 %}
+                                <p>
+                                    id: {{ i["id"] }}
+                                </p>
+                            {% endif %}
+                        {% endfor %}
+                    </ol>
+                </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
