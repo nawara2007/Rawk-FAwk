@@ -5,11 +5,15 @@
 {% endblock %}
 
 {% block main %}
+    <section>
+        <h1>Doctors</h1>
+    </section>
     {% for i in all_doctors %}
     <section>
-        <h2>{{ i["name"] }}</h2>
-        <img width="300" height="200" src="{{ i['picture'] }}">
+        <h2>Dr: {{ i["name"] }}</h2>
+        <img width="300" height="200" src="{{ i['picture'] }}" style="border-radius: 5px;border: 3px solid #000000;">
         <p> Address: {{ i["address"] }}</p>
+        <p> Email: {{ i["email"] }}</p>
         <p> Rate: {{ i["rate"] }}/10</p>
         {% if session.user_id == 1 %}
             <p>

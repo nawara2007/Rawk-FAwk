@@ -175,16 +175,17 @@ def editdoctors():
 @login_required
 @superuser_required
 def adddoctor():
-    if not request.form.get("name") or not request.form.get("address") or not request.form.get("rate") or not request.form.get("picture"):
+    if not request.form.get("name") or not request.form.get("address") or not request.form.get("rate") or not request.form.get("picture") or not request.form.get("email"):
         return apology("Please enter the full data")
     
     name = request.form.get("name")
     address = request.form.get("address")
     rate = request.form.get("rate")
     picture = request.form.get("picture")
+    email = request.form.get("email")
 
         
-    db.execute("INSERT INTO doctors (name, address, rate, picture) VALUES (?, ?, ?, ?)", name, address, rate, picture)
+    db.execute("INSERT INTO doctors (name, address, rate, picture, email) VALUES (?, ?, ?, ?, ?)", name, address, rate, picture, email)
 
     return redirect("/editdoctors")
 
@@ -358,4 +359,4 @@ def register():
     else:
         return render_template("register.html")
 
-app.run(host="0.0.0.0", port=8060, threaded=True)
+app.run(host="0.0.0.0", port=8080, threaded=True)

@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block main %}
+<section>
+    <h1>Welcome back to our website</h1>
+    <img src="/static/logo.png" width="400" style="margin-bottom: 15px; border-radius: 5px; border: 2px solid #000000;" alt="Logo">
+    <h4> Enter your existing username and password </h4>
+</section>
 <div style="display: flex; justify-content: center; align-items: center; min-height: 60vh; margin: 0;">
     <form action="/login" method="post">
         <div class="form-group">
