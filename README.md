@@ -9,7 +9,7 @@
 ### Features in this project
 1. The website is built based on web application framework (Flask) 
 2. The ability to make account with username and password (encrypted) that is stored in database
-3. Database built by sqlite3 by CS50 library for users, comments, aticles, videos and doctors
+3. Database built by sqlite3 by CS50 library for users, comments, articles, videos and doctors
 4. Page to take tests to know your anxiety level
 5. Page for articles about anxiety
 6. Page for videos about anxiety
@@ -25,6 +25,11 @@
 
 ### How to change website content ?
 Login as (username: admin, password: 1234)
+
+### Third-party Libraries Required
+1. flask
+2. flask_Session
+3. cs50 library for sqlite
 
 ### Team participated in the project
 1. Mohamed Nawara
