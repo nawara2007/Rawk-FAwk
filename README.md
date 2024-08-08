@@ -4,6 +4,7 @@
 ![Project Picture](https://github.com/nawara2007/Rwak-and-Fwak/blob/main/static/logo.png)
 
 ### This website is built by team: El Matadors
+![Project Picture](https://github.com/nawara2007/Rwak-and-Fwak/blob/main/static/website.png)
 
 ### Features in this project
 1. The website is built based on web application framework (Flask) 
@@ -14,14 +15,16 @@
 6. Page for videos about anxiety
 7. Page for doctors (fictional for now)
 8. The ability to change your password
-9. The ability to change the website content by logging in as admin (username:admin, password:1234)
 
-### What is in this repository
+### What is in this repository ?
 1. Statics folder that has the logos and the CSS style file
 2. Template folder that has all the pages in it and a main layout file that they all handled by jinja
 3. Main python application file (app.py) that handle all the requests and data (received and sent) 
 4. Helper python file that has decorated function (login_required, superuser_required)
 5. Sqlite3 databse file (users.db)
+
+### How to change website content ?
+Login as (username: admin, password: 1234)
 
 ### Team participated in the project
 1. Mohamed Nawara
