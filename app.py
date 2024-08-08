@@ -144,7 +144,7 @@ def tests():
         elif result >= 10 and result <= 14:
            db.execute("UPDATE users SET status= ? Where id = ?", "Moderate Anxiety", user_id)
         elif result >= 15 and result <= 21:
-            db.execute("UPDATE users SET status= ? Where id = ?", "Severe Anxiety", user_id)
+            db.execute("UPDATE users SET status= ? Where id = ?", "Severe Anxiety (we recommend a doctor)", user_id)
 
         return redirect("/")
     else:
