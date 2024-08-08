@@ -20,7 +20,7 @@
 1. Statics folder that has the logos and the CSS style file
 2. Template folder that has all the pages in it and a main layout file that they all handled by jinja
 3. Main python application file (app.py) that handle all the requests and data (received and sent) 
-4. Helper python file that has decorated function (login_required, superuser_required)
+4. Helper python file that has decorated function (login_required, superuser_required, enter aplogy site for errors)
 5. Sqlite3 databse file (users.db)
 
 ### How to change website content ?
